@@ -1,18 +1,25 @@
 import React from 'react'
 import styled from 'styled-components'
+import { useWallet } from 'use-wallet'
 
 import Container from '../Container'
 import Logo from '../Logo'
 
 import AccountButton from './components/AccountButton'
+import Dropdown from '../DropDown'
 import Nav from './components/Nav'
 
 interface TopBarProps {
-  onPresentMobileMenu: () => void,
+  onPresentMobileMenu: () => void
   showButton?: boolean
 }
 
-const TopBar: React.FC<TopBarProps> = ({ onPresentMobileMenu, showButton = false }) => {
+const TopBar: React.FC<TopBarProps> = ({
+  onPresentMobileMenu,
+  showButton = false,
+}) => {
+  const { account } = useWallet()
+
   return (
     <StyledTopBar>
       <Container size="lg">
@@ -21,11 +28,12 @@ const TopBar: React.FC<TopBarProps> = ({ onPresentMobileMenu, showButton = false
             <Logo />
           </StyledLogoWrapper>
           <Nav showMenu={false} />
-          {showButton &&
-          <StyledAccountButtonWrapper>
-            <AccountButton />
-          </StyledAccountButtonWrapper>
-          }
+          {showButton && (
+            <StyledAccountButtonWrapper>
+              <AccountButton />
+            </StyledAccountButtonWrapper>
+          )}
+          {account && <Dropdown />}
         </StyledTopBarInner>
       </Container>
     </StyledTopBar>
@@ -40,7 +48,7 @@ const StyledLogoWrapper = styled.div`
 `
 
 const StyledTopBar = styled.div`
-background: rgb(23, 5, 75);  
+  background: rgb(23, 5, 75);
 `
 
 const StyledTopBarInner = styled.div`

@@ -1,0 +1,20 @@
+{
+  "network": [
+    {
+      "name": "Ethreum",
+      "chainId": 1
+    },
+    {
+      "name": "Rinkeby",
+      "chainId": 4
+    },
+    {
+      "name": "Goerli",
+      "chainId": 5
+    },
+    {
+      "name": "Kovan",
+      "chainId": 42
+    }
+  ]
+}
