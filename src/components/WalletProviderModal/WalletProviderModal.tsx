@@ -1,8 +1,11 @@
+import { off } from 'process'
 import React, { useEffect } from 'react'
 import styled from 'styled-components'
+import { idText } from 'typescript'
 import { useWallet } from 'use-wallet'
 
 import metamaskLogo from '../../assets/img/metamask-fox.svg'
+import changeNetwork from '../../utils/changeNetwork'
 
 import Button from '../Button'
 import Modal, { ModalProps } from '../Modal'
@@ -13,7 +16,14 @@ import ModalTitle from '../ModalTitle'
 import WalletCard from './components/WalletCard'
 
 const WalletProviderModal: React.FC<ModalProps> = ({ onDismiss }) => {
-  const { account, connect } = useWallet()
+  const { account, connect, error } = useWallet()
+
+  useEffect(() => {
+    if (error) {
+      alert("Please change network to Rinkeby")
+      changeNetwork(4)
+    }
+  }, [error])
 
   useEffect(() => {
     if (account) {
@@ -27,11 +37,11 @@ const WalletProviderModal: React.FC<ModalProps> = ({ onDismiss }) => {
 
       <ModalContent>
         <StyledWalletsWrapper>
-            <WalletCard
-              icon={<img src={metamaskLogo} style={{ height: 32 }} />}
-              onConnect={() => connect('injected')}
-              title="Metamask"
-            />
+          <WalletCard
+            icon={<img src={metamaskLogo} style={{ height: 32 }} />}
+            onConnect={() => connect('injected')}
+            title="Metamask"
+          />
         </StyledWalletsWrapper>
       </ModalContent>
 
